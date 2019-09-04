@@ -110,4 +110,11 @@ class Package extends SplBean
     {
         $this->data = $data;
     }
+
+    function __toString()
+    {
+        /*
+         * 这边返回命令string ,带\r\n
+         */
+    }
 }
