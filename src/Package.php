@@ -225,6 +225,10 @@ class Package extends SplBean
         return $this;
     }
 
+    /**
+     * 数据解包
+     * @param $binaryPackage
+     */
     public function unpack($binaryPackage)
     {
         $format = 'Cmagic/Copcode/nkeylength/Cextralength/Cdatatype/nstatus/Nbodylength/NOpaque/NCAS1/NCAS2';
