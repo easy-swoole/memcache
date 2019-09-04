@@ -1,0 +1,17 @@
+{
+    "name": "easyswoole/memcache",
+    "description": "use online payment easily just like echo \"hello world\";",
+    "type": "library",
+    "license": "Apache-2.0",
+    "autoload": {
+        "psr-4": {
+            "EasySwoole\\Memcache\\": "src/"
+        }
+    },
+    "require": {
+        "easyswoole/spl": "^1.1"
+    },
+    "require-dev": {
+        "easyswoole/swoole-ide-helper": "^1.1"
+    }
+}
