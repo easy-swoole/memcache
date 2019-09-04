@@ -1,6 +1,6 @@
 {
     "name": "easyswoole/memcache",
-    "description": "use online payment easily just like echo \"hello world\";",
+    "description": "Coroutine version of Memcache client",
     "type": "library",
     "license": "Apache-2.0",
     "autoload": {
