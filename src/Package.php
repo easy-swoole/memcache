@@ -264,9 +264,9 @@ class Package extends SplBean
     public function __toString()
     {
         // 计算包各部分的长度
-        $keyLength = $this->getKey() ? strlen($this->getKey()) : 0x00;
-        $valueLength = $this->getValue() ? strlen($this->getValue()) : 0x00;
-        $extrasLength = $this->getExtras() ? strlen($this->getExtras()) : 0x00;
+        $keyLength = !is_null($this->getKey()) ? strlen($this->getKey()) : 0x00;
+        $valueLength = !is_null($this->getValue()) ? strlen($this->getValue()) : 0x00;
+        $extrasLength = !is_null($this->getExtras()) ? strlen($this->getExtras()) : 0x00;
         $totalBodyLength = $keyLength + $valueLength + $extrasLength;
 
         // 打包数据头部二进制
@@ -279,9 +279,9 @@ class Package extends SplBean
         );
 
         // 拼接包体数据为完整包
-        $this->getExtras() && $package .= $this->getExtras();
-        $this->getKey() && $package .= $this->getKey();
-        $this->getValue() && $package .= $this->getValue();
+        !is_null($this->getExtras()) && $package .= $this->getExtras();
+        !is_null($this->getKey()) && $package .= $this->getKey();
+        !is_null($this->getValue()) && $package .= $this->getValue();
         return $package;
     }
 }
