@@ -13,7 +13,7 @@ class Package extends SplBean
 {
     // for header
     protected $magic;
-    protected $opCode;
+    protected $opcode;
     protected $dataType;
     protected $status;
     protected $opaque;
@@ -46,22 +46,22 @@ class Package extends SplBean
     }
 
     /**
-     * OpCode Getter
+     * Opcode Getter
      * @return mixed
      */
-    public function getOpCode()
+    public function getOpcode()
     {
-        return $this->opCode;
+        return $this->opcode;
     }
 
     /**
-     * OpCode Setter
-     * @param mixed $opCode
+     * Opcode Setter
+     * @param mixed $opcode
      * @return Package
      */
-    public function setOpCode($opCode)
+    public function setOpcode($opcode)
     {
-        $this->opCode = $opCode;
+        $this->opcode = $opcode;
         return $this;
     }
 
@@ -231,13 +231,13 @@ class Package extends SplBean
      */
     public function unpack($binaryPackage)
     {
+        // 解开数据的头部
         $format = 'Cmagic/Copcode/nkeylength/Cextralength/Cdatatype/nstatus/Nbodylength/NOpaque/NCAS1/NCAS2';
         $header = unpack($format, $binaryPackage);
-
         $this->setCas1($header['CAS1']);
         $this->setCas2($header['CAS2']);
         $this->setMagic($header['magic']);
-        $this->setOpCode($header['opcode']);
+        $this->setOpcode($header['opcode']);
         $this->setStatus($header['status']);
         $this->setOpaque($header['Opaque']);
         $this->setDataType($header['datatype']);
@@ -252,7 +252,6 @@ class Package extends SplBean
                 $extraUnpacked = unpack('Nint', substr($data, 0, $header['extralength']));
                 $this->extras = $extraUnpacked['int'];
             }
-
             $this->key = substr($data, $header['extralength'], $header['keylength']);
             $this->value = substr($data, $header['extralength'] + $header['keylength']);
         }
@@ -270,8 +269,8 @@ class Package extends SplBean
         $extrasLength = $this->getExtras() ? strlen($this->getExtras()) : 0x00;
         $totalBodyLength = $keyLength + $valueLength + $extrasLength;
 
-        // 打包数据为二进制包
-        $package = pack('CCnCCnNNNN', 0x80, $this->getOpCode(), $keyLength,
+        // 打包数据头部二进制
+        $package = pack('CCnCCnNNNN', 0x80, $this->getOpcode(), $keyLength,
             $extrasLength, null, null,
             $totalBodyLength,
             $this->getOpaque(),
@@ -279,10 +278,10 @@ class Package extends SplBean
             $this->getCas2()
         );
 
+        // 拼接包体数据为完整包
         $this->getExtras() && $package .= $this->getExtras();
         $this->getKey() && $package .= $this->getKey();
         $this->getValue() && $package .= $this->getValue();
-
         return $package;
     }
 }
