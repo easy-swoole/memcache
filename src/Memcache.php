@@ -300,6 +300,11 @@ class Memcache
     {
         $reqPack = new Package(['opcode' => Opcode::OP_GET, 'key' => $key]);
         $resPack = $this->sendCommand($reqPack, $timeout);
+
+        if($resPack->getStatus() === Status::STAT_KEY_NOTFOUND){
+            return null;
+        }
+
         $this->checkStatus($resPack);
 
         $value = $resPack->getValue();
