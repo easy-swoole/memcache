@@ -12,7 +12,7 @@ use EasySwoole\Spl\SplBean;
 class Config extends SplBean
 {
     protected $host;
-    protected $port;
+    protected $port = 11211;
 
     /**
      * Host Getter
