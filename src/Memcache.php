@@ -277,7 +277,7 @@ class Memcache
      */
     public function prepend($key, $value, $timeout = null)
     {
-        $reqPack = new Package(['opcode' => Opcode::OP_APPEND, 'key' => $key, 'value' => $value]);
+        $reqPack = new Package(['opcode' => Opcode::OP_PREPEND, 'key' => $key, 'value' => $value]);
         $resPack = $this->sendCommand($reqPack, $timeout);
 
         // 如果不存在这个Key则必定Prepend失败

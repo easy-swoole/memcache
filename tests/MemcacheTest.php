@@ -9,7 +9,7 @@ use EasySwoole\Memcache\Memcache;
 use PHPUnit\Framework\TestCase;
 use Swoole\Coroutine;
 
-class GetSetTest extends TestCase
+class MemcacheTest extends TestCase
 {
     /** @var Memcache */
     private $client;
@@ -102,8 +102,8 @@ class GetSetTest extends TestCase
         $key = 'testPrepend';
         $value = 'b';
         $this->client->set($key, $value);//b
-        $this->client->prepend($key, $value . 'a');//bab
-        $this->assertEquals($value . 'a' . $value, $this->client->get($key));
+        $this->client->prepend($key, 'a');//bab
+        $this->assertEquals('a' . $value, $this->client->get($key));
 
     }
 
