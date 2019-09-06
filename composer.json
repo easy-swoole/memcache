@@ -5,13 +5,15 @@
     "license": "Apache-2.0",
     "autoload": {
         "psr-4": {
-            "EasySwoole\\Memcache\\": "src/"
+            "EasySwoole\\Memcache\\": "src/",
+            "EasySwoole\\Memcache\\Tests\\": "tests/"
         }
     },
     "require": {
         "easyswoole/spl": "^1.1"
     },
     "require-dev": {
-        "easyswoole/swoole-ide-helper": "^1.1"
+        "easyswoole/swoole-ide-helper": "^1.1",
+        "easyswoole/phpunit": ">=1.0.0"
     }
 }
