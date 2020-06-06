@@ -30,6 +30,7 @@ class Memcache
     const FLAG_TYPE_DOUBLE = 2;
     const FLAG_TYPE_BOOL = 3;
     const FLAG_TYPE_SERIALIZED = 4;
+    const FLAG_TYPE_IGBINARY_SERIALIZED = 5;
 
     function __construct(Config $config)
     {
@@ -325,6 +326,9 @@ class Memcache
                 break;
             case self::FLAG_TYPE_SERIALIZED:
                 $value = unserialize($value);
+                break;
+            case self::FLAG_TYPE_IGBINARY_SERIALIZED:
+                $value = igbinary_unserialize($value);
                 break;
         }
 
