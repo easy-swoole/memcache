@@ -2,14 +2,12 @@
 
 namespace EasySwoole\Memcache;
 
-use EasySwoole\Spl\SplEnum;
-
 /**
  * Memcache Opcode
  * Class Opcode
  * @package Memcache
  */
-class Opcode extends SplEnum
+class Opcode
 {
     const OP_GET = 0x00;
     const OP_SET = 0x01;

@@ -10,7 +10,7 @@
         }
     },
     "require": {
-        "easyswoole/spl": "^1.1"
+        "easyswoole/spl": "^2.2"
     },
     "require-dev": {
         "easyswoole/swoole-ide-helper": "^1.1",
