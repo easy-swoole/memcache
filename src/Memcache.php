@@ -37,7 +37,7 @@ class Memcache
 
     /**
      * 连接客户端
-     * @param null|integer $timeout
+     * @param null|float $timeout
      * @return bool
      * @throws ConnectException
      */
@@ -59,7 +59,7 @@ class Memcache
 
         // 如果当前客户端没有连接则进行连接
         if (!$this->client->isConnected()) {
-            $connected = $this->client->connect($this->config->getHost(), $this->config->getPort(), $timeout);
+            $connected = $this->client->connect($this->config->getHost(), $this->config->getPort(), $timeout ?? 0);
             if (!$connected) {
                 $connectStr = "memcache://{$this->config->getHost()}:{$this->config->getPort()}";
                 throw new ConnectException("Connect to Memcache {$connectStr} failed: {$this->client->errMsg}");
@@ -72,16 +72,16 @@ class Memcache
     /**
      * 发送一个原始命令
      * @param Package $package
-     * @param int|null $timeout
+     * @param float|null $timeout
      * @return Package
      * @throws ConnectException
      * @throws MemcacheException
      */
-    function sendCommand(Package $package, int $timeout = null): Package
+    function sendCommand(Package $package, ?float $timeout = null): Package
     {
         if ($this->connect()) {
             $this->client->send($package->__toString());
-            $binaryPackage = $this->client->recv($timeout);
+            $binaryPackage = $this->client->recv($timeout ?? 0);
             if ($binaryPackage && $binaryPackage !== '') {
 
                 $resPack = new Package;
@@ -356,7 +356,7 @@ class Memcache
      * @throws MemcacheException
      * CreateTime: 2021/3/15 12:49 上午
      */
-    public function cas(float $casToken, string $key, $value, int $expiration = null, $timeout = null)
+    public function cas(float $casToken, string $key, $value, ?int $expiration = null, $timeout = null)
     {
         list($flag, $value) = $this->processValueFlags(0, $value);
         $extras = pack('NN', $flag, $expiration);
@@ -468,7 +468,7 @@ class Memcache
             $this->client->send($reqPack->__toString());
             while (true) {
 
-                $binaryPackage = $this->client->recv($timeout);
+                $binaryPackage = $this->client->recv($timeout ?? 0);
                 if ($binaryPackage) {
                     $resPack = new Package;
                     $resPack->unpack($binaryPackage);
@@ -494,7 +494,7 @@ class Memcache
      * @throws ConnectException
      * @throws MemcacheException
      */
-    public function version(int $timeout = null)
+    public function version(?int $timeout = null)
     {
         $reqPack = new Package(['opcode' => Opcode::OP_VERSION]);
         $resPack = $this->sendCommand($reqPack, $timeout);
@@ -511,7 +511,7 @@ class Memcache
      * @throws ConnectException
      * @throws MemcacheException
      */
-    public function flush(int $expiration = null, int $timeout = null)
+    public function flush(?int $expiration = null, ?int $timeout = null)
     {
         $extras = pack('N', $expiration);
         $reqPack = new Package(['opcode' => Opcode::OP_FLUSH, 'extras' => $extras]);
